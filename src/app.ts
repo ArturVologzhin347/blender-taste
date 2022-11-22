@@ -1,11 +1,18 @@
-import { configurate } from "./config";
+import { configurate } from './config';
 configurate();
 
-import log4js from "log4js";
+import log4js from 'log4js';
+import { startPolling, telegramBot } from './bot';
+import TelegramBot from 'node-telegram-bot-api';
 
-const logger = log4js.getLogger("app.ts");
+const logger = log4js.getLogger('app.ts');
 
-logger.debug("Hello world!");
-logger.info("Hello world!");
-logger.warn("Hello world!");
-logger.error("Hello world!");
+telegramBot.onText(/\/start/, (message: TelegramBot.Message) => {
+    logger.debug(message.chat.id);
+});
+
+void (async () => {
+  await startPolling().then(() => {
+    logger.info('App started!');
+  });
+})();
