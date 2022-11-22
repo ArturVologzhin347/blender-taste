@@ -1,5 +1,6 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { authorize, AuthResultCode, clientIsExists } from '../service/authService';
+import { help } from '../service/helpService';
 
 const handleStartCommand: (telegramBot: TelegramBot) => void = (telegramBot) => {
     telegramBot.onText(/\/start/, (message: TelegramBot.Message) => {
@@ -7,7 +8,7 @@ const handleStartCommand: (telegramBot: TelegramBot) => void = (telegramBot) => 
 
         void (async () => {
             if (await clientIsExists(chat)) {
-                // TODO /help invoke
+                help(telegramBot, chat, true);
                 return;
             }
 
