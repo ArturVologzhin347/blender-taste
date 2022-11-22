@@ -1,11 +1,22 @@
-import { configurate } from "./config";
+import { configurate } from './config';
 configurate();
 
-import log4js from "log4js";
+import log4js from 'log4js';
+import { startPolling, telegramBot } from './bot';
+import * as handlers from './handlers';
+import { getAllProjects } from './service/projectService';
+import { watchRenders } from './service/renderService';
 
-const logger = log4js.getLogger("app.ts");
+const logger = log4js.getLogger('app.ts');
 
-logger.debug("Hello world!");
-logger.info("Hello world!");
-logger.warn("Hello world!");
-logger.error("Hello world!");
+handlers.setup(telegramBot);
+
+void (async () => {
+    await watchRenders(telegramBot);
+})();
+
+void (async () => {
+    await startPolling().then(async () => {
+        logger.info('App started!');
+    });
+})();
