@@ -1,4 +1,5 @@
 import TelegramBot from 'node-telegram-bot-api';
+import { isNotificationsEnabled } from './renderService';
 
 const help: (telegramBot: TelegramBot, chat: number, authorized: boolean) => void = (
     telegramBot,
@@ -8,8 +9,13 @@ const help: (telegramBot: TelegramBot, chat: number, authorized: boolean) => voi
     void (async () => {
         let message: string;
 
-        if(authorized) {
-            message = 'HELP'; // TODO 
+        if (authorized) {
+            const notificationsEnabled = isNotificationsEnabled();
+            message =
+                '/help -> помощь.\n' +
+                '/notify -> включить/выключить уведомления для завершённых рендеров.' +
+                '\n\n' +
+                `Уведомления: ${notificationsEnabled ? '✅ Включены' : '❌ Отключены'}.`;
         } else {
             message = 'Авторизуйся сначала, потом помощи проси. /start';
         }

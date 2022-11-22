@@ -70,4 +70,4 @@ const authorize: (chat: number, password: string | undefined) => Promise<AuthRes
     return await Promise.resolve(AuthResultCode.NOT_AUTHORIZED);
 };
 
-export { authorize, AuthResultCode, clientIsExists };
+export { authorize, AuthResultCode, clientIsExists, getAllClients };

@@ -1,7 +1,11 @@
 import log4js from 'log4js';
 import fs from 'fs';
 import path from 'path';
+import chokidar from 'chokidar';
 import Project from '../model/Project';
+import TelegramBot from 'node-telegram-bot-api';
+import { telegramBot } from '../bot';
+import Render from '../model/Render';
 
 const logger = log4js.getLogger('projectService.ts');
 const PROJECTS_PATH = path.resolve(process.env['MAIN_FOLDER']);
