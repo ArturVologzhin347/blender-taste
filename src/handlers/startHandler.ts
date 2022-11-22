@@ -8,7 +8,7 @@ const handleStartCommand: (telegramBot: TelegramBot) => void = (telegramBot) => 
 
         void (async () => {
             if (await clientIsExists(chat)) {
-                help(telegramBot, chat, true);
+                help(telegramBot, chat, false)
                 return;
             }
 
