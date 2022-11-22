@@ -3,8 +3,9 @@ import fs from 'fs';
 import path from 'path';
 
 const logger = log4js.getLogger('authService.ts');
-const dataDir = path.resolve('./data');
-const clientsPath = `${dataDir}/clients.txt`;
+
+const DATA_DIR = path.resolve('./data');
+const CLIENTS_PATH = `${DATA_DIR}/clients.txt`;
 
 enum AuthResultCode {
     NOT_AUTHORIZED = 'NOT_AUTHORIZED',
@@ -24,9 +25,9 @@ const clientIsExists: (chat: number) => Promise<boolean> = async (chat) => {
 };
 
 const getAllClients: () => Promise<number[]> = async () => {
-    if (fs.existsSync(clientsPath)) {
+    if (fs.existsSync(CLIENTS_PATH)) {
         return await fs.promises
-            .readFile(clientsPath, { encoding: 'utf-8' })
+            .readFile(CLIENTS_PATH, { encoding: 'utf-8' })
             .then(async (buffer) => {
                 const clients: number[] = buffer
                     .trim()
@@ -46,7 +47,7 @@ const getAllClients: () => Promise<number[]> = async () => {
 };
 
 const addClient: (chat: number) => Promise<void> = async (chat) => {
-    return await fs.promises.appendFile(clientsPath, `${String(chat)}\n`, { encoding: 'utf-8' });
+    return await fs.promises.appendFile(CLIENTS_PATH, `${String(chat)}\n`, { encoding: 'utf-8' });
 };
 
 const authorize: (chat: number, password: string | undefined) => Promise<AuthResultCode> = async (
